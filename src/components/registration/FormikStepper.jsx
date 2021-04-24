@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import ProfileSchema from './validation/ProfileSchema';
+import ProfileSchema from "./validation/ProfileSchema";
 
 const FormikStepper = ({ children, ...props }) => {
     const childrenArray = React.Children.toArray(children);
@@ -58,7 +58,7 @@ const FormikStepper = ({ children, ...props }) => {
                                     color="primary"
                                     onClick={() => setStep((s) => s - 1)}
                                 >
-                                    Previous
+                                    Back
                                 </Button>
                             </Grid>
                         ) : null}
@@ -69,7 +69,7 @@ const FormikStepper = ({ children, ...props }) => {
                                         <CircularProgress size="1rem" />
                                     ) : null
                                 }
-                                disabled={isSubmitting}
+                                disabled={isSubmitting || isLastStep()}
                                 variant="contained"
                                 color="primary"
                                 type="submit"
@@ -86,6 +86,6 @@ const FormikStepper = ({ children, ...props }) => {
             )}
         </Formik>
     );
-}
+};
 
 export default FormikStepper;

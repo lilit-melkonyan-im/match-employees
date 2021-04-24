@@ -54,12 +54,14 @@ const Login = () => {
                                         name="password"
                                         component={TextField}
                                         label="Password"
+                                        type="password"
                                     />
                                     <Field
                                         fullWidth
                                         name="confirmPassword"
                                         component={TextField}
                                         label="Confirm Password"
+                                        type="password"
                                     />
                                 </Box>
                                 <Box paddingBottom={2}>

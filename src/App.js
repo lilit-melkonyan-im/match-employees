@@ -21,9 +21,9 @@ import Profile from "./components/profile/Profile";
 
 const useStyles = makeStyles({
     Container: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        // display: "flex",
+        // alignItems: "center",
+        // justifyContent: "center",
     },
     AppBar: {
         alignItems: "center",
@@ -45,7 +45,7 @@ function App() {
                 </AppBar>
                 <CssBaseline />
                 <Container className={classes.Container}>
-                    <Box marginTop={10} width="500px" alignItems="center">
+                    <Box marginTop={10} alignItems="center">
                         <Routes />
                     </Box>
                 </Container>

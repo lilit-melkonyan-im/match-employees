@@ -9,7 +9,7 @@ const ProfileSchema = Yup.object().shape({
         .email("Invalid email"),
     yearsOfExperience: Yup.number()
         .min(0, "Too Short!")
-        .max(50, "Too Long!")
+        .max(50, "Too Long!"),
 });
 
 export default ProfileSchema;
