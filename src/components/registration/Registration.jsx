@@ -13,7 +13,7 @@ const initialValues = {
 
 const FormikStep = ({ children }) => <>{children}</>;
 
-export default function ProfileFillingForm() {
+export default function Registration() {
     const [selectedDate, handleDateChange] = useState(null);
     return (
         <Card>

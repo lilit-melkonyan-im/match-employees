@@ -4,6 +4,8 @@ import {
     Box,
     Button,
     CircularProgress,
+    Typography,
+    Link,
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
@@ -25,56 +27,64 @@ const Login = () => {
     const onSubmit = values => {
         console.log('Values are ',values)
         setLoggidIn(true)
-        // history.push('/profile');
+        // history.push('/registration');
     }
     return (
         <Card>
             <CardContent>
-                {loggedIn ? 
-                'Welcome!' :
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={SignupSchema}
-                    onSubmit={onSubmit}
-                >
-                    {({ isSubmitting }) => (
-                        <Form autoComplete="off">
-                            <Box paddingBottom={2}>
-                                <Field
-                                    fullWidth
-                                    name="email"
-                                    component={TextField}
-                                    label="Login"
-                                />
-                                <Field
-                                    fullWidth
-                                    name="password"
-                                    component={TextField}
-                                    label="Password"
-                                />
-                                <Field
-                                    fullWidth
-                                    name="confirmPassword"
-                                    component={TextField}
-                                    label="Confirm Password"
-                                />
-                            </Box>
-                            <Button
-                                startIcon={
-                                    isSubmitting ? (
-                                        <CircularProgress size="1rem" />
-                                    ) : null
-                                }
-                                disabled={isSubmitting}
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                            >
-                                Sign Up
-                            </Button>
-                        </Form>
-                    )}
-                </Formik>}
+                {loggedIn ? (
+                    "Welcome!"
+                ) : (
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={SignupSchema}
+                        onSubmit={onSubmit}
+                    >
+                        {({ isSubmitting }) => (
+                            <Form autoComplete="off">
+                                <Box paddingBottom={2}>
+                                    <Field
+                                        fullWidth
+                                        name="email"
+                                        component={TextField}
+                                        label="Login"
+                                    />
+                                    <Field
+                                        fullWidth
+                                        name="password"
+                                        component={TextField}
+                                        label="Password"
+                                    />
+                                    <Field
+                                        fullWidth
+                                        name="confirmPassword"
+                                        component={TextField}
+                                        label="Confirm Password"
+                                    />
+                                </Box>
+                                <Box paddingBottom={2}>
+                                    <Button
+                                        startIcon={
+                                            isSubmitting ? (
+                                                <CircularProgress size="1rem" />
+                                            ) : null
+                                        }
+                                        disabled={isSubmitting}
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </Box>
+                                <Typography component="div">
+                                    Already have an account?{" "}
+                                    <Link href="/login">Login</Link>
+                                </Typography>
+                            </Form>
+                        )}
+                    </Formik>
+                )}
             </CardContent>
         </Card>
     );
