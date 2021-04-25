@@ -43,6 +43,19 @@ const PersonalData = ({ selectedDate, handleDateChange }) => (
                 onChange={handleDateChange}
             />
         </Box>
+        <Box paddingBottom={2}>
+            <div id="my-radio-group">Gender</div>
+        </Box>
+        <Box paddingBottom={2}>
+            <label>
+                <Field type="radio" name="gender" value="male" />
+                Male
+            </label>
+            <label>
+                <Field type="radio" name="gender" value="female" />
+                Female
+            </label>
+        </Box>
     </>
 );
 

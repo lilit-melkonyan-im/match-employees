@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Box, Grid, Typography } from "@material-ui/core";
-import suggestions from "./resources/suggestions";
+import suggestions from "../resources/suggestions";
 import DataTable from "./DataTable";
-import { useFormikContext } from "./Registration";
+import { useRegistrationContext } from "../Registration";
 
 const Suggestions = () => {
     const [rows, setRows] = useState([]);
-    const { setSuggestions } = useFormikContext();
+    const { setSuggestions } = useRegistrationContext();
 
     const handleRowsSelected = (rows) => {
         setRows(rows);
@@ -25,7 +25,7 @@ const Suggestions = () => {
             <Grid container spacing={2}>
                 <Grid item>
                     <Typography component="p">
-                        Make sure you've choosed 5 employees.
+                        Make sure you've choosen 5 employees.
                     </Typography>
                 </Grid>
                 <Grid item>

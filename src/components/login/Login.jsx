@@ -22,6 +22,7 @@ const initialValues = {
 const Login = () => {
     const history = useHistory();
     const onSubmit = (values) => {
+        // TODO
         history.push('/profile');
     };
     return (
@@ -30,6 +31,7 @@ const Login = () => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={SignupSchema}
+                    validateOnChange={false}
                     onSubmit={onSubmit}
                 >
                     {({ isSubmitting }) => (

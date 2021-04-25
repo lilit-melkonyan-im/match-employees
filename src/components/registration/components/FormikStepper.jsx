@@ -6,9 +6,10 @@ import {
     StepLabel,
     Stepper,
 } from "@material-ui/core";
+import { useThemeProps } from "@material-ui/data-grid";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import ProfileSchema from "./validation/ProfileSchema";
+import ProfileSchema from "../validation/ProfileSchema";
 
 const FormikStepper = ({ children, ...props }) => {
     const childrenArray = React.Children.toArray(children);
@@ -34,7 +35,7 @@ const FormikStepper = ({ children, ...props }) => {
                 }
             }}
         >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, isValid }) => (
                 <Form autoComplete="off">
                     <Stepper alternativeLabel activeStep={step}>
                         {childrenArray.map((child, index) => (
@@ -56,7 +57,7 @@ const FormikStepper = ({ children, ...props }) => {
                                     disabled={isSubmitting}
                                     variant="contained"
                                     color="primary"
-                                    onClick={() => setStep((s) => s - 1)}
+                                    onClick={() => isValid ? setStep((s) => s - 1) : null }
                                 >
                                     Back
                                 </Button>
