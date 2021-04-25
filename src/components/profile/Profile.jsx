@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 
 const Profile = () => (
     <Card>

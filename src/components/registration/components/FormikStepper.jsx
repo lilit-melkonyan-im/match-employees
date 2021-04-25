@@ -6,7 +6,6 @@ import {
     StepLabel,
     Stepper,
 } from "@material-ui/core";
-import { useThemeProps } from "@material-ui/data-grid";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import ProfileSchema from "../validation/ProfileSchema";

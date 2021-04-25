@@ -1,17 +1,38 @@
 import React, { useState } from "react";
 import { Button, Box, Grid, Typography } from "@material-ui/core";
+
 import suggestions from "../resources/suggestions";
 import DataTable from "./DataTable";
 import { useRegistrationContext } from "../Registration";
+import { useModal } from "../../../hooks/common";
+import Modal from "./Modal";
+import DraggableSelectionsList from './DraggableSelectionsList';
+
+const adaptSuggestions = () => {
+    suggestions.map( sug => sug.id = '' + sug.id)
+}
+
+const filterSuggestions = (selection) => {
+    const filtered = suggestions.filter((sug) => selection.includes("" + sug.id));
+    return filtered;
+}
 
 const Suggestions = () => {
-    const [rows, setRows] = useState([]);
+    const [selection, setSelection] = useState([]);
     const { setSuggestions } = useRegistrationContext();
 
-    const handleRowsSelected = (rows) => {
-        setRows(rows);
-        setSuggestions(rows);
+    const handleRowsSelected = (selection) => {
+        setSelection(selection);
+        setSuggestions(selection);
     };
+
+    const submit = () => {
+        closeModal();
+    };
+
+    const [isOpen, openModal, closeModal] = useModal(false);
+
+    adaptSuggestions();
 
     return (
         <>
@@ -32,12 +53,23 @@ const Suggestions = () => {
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={rows.length !== 5 ? true : false}
+                        disabled={selection.length !== 5 ? true : false}
+                        onClick={() => openModal()}
                     >
                         Prioritize
                     </Button>
                 </Grid>
             </Grid>
+            <Modal
+                open={isOpen}
+                handleSubmit={submit}
+                handleClose={closeModal}
+                title="Prioritize Your Selection"
+                leftBtnText="Cancel"
+                rightBtnText="Done"
+            >
+                <DraggableSelectionsList selection={filterSuggestions(selection)} />
+            </Modal>
         </>
     );
 };

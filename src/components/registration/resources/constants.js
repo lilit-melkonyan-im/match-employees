@@ -1,4 +1,4 @@
-export default {
+const industries = {
     industries: [
         "Architecture",
         "Business/Consulting/Management",
@@ -23,3 +23,5 @@ export default {
         "Finance/Accounting",
     ],
 };
+
+export default industries;

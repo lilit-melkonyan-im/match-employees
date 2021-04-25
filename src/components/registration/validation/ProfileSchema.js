@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import constants from "../resources/constants";
+// import constants from "../resources/constants";
 
 const ProfileSchema = Yup.object().shape({
     firstName: Yup.string().required("Required"),
