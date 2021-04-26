@@ -47,6 +47,7 @@ const Suggestions = () => {
                     rows={suggestions}
                     name="suggestions"
                     setRowsSelecton={handleRowsSelected}
+                    checkboxSelection
                 />
             </Box>
             <Grid container spacing={2}>

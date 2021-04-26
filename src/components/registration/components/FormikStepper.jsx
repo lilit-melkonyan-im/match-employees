@@ -113,14 +113,14 @@ const FormikStepper = ({ children, ...props }) => {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users,
+        user: state.user,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addUser: (id) => {
-            dispatch({ type: "ADD_USER", id: id });
+        addUser: (newUser) => {
+            dispatch({ type: "ADD-USER", newUser: newUser });
         },
     };
 };

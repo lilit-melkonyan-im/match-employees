@@ -24,7 +24,12 @@ const initialValues = {
 const Login = () => {
     const history = useHistory();
     const onSubmit = (values) => {
-        history.push('/registration');
+        history.push({
+            pathname: "/registration",
+            state: {
+                update: false,
+            },
+        });
     };
     return (
         <Card>
