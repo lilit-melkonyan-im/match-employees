@@ -24,7 +24,6 @@ const initialValues = {
 const Login = () => {
     const history = useHistory();
     const onSubmit = (values) => {
-        console.log("Values are ", values);
         history.push('/registration');
     };
     return (

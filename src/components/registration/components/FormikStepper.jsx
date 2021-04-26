@@ -7,14 +7,24 @@ import {
     Stepper,
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import ProfileSchema from "../validation/ProfileSchema";
+
+const FormContext = React.createContext("formik");
+
+export const useFormContext = () => useContext(FormContext);
 
 const FormikStepper = ({ children, ...props }) => {
     const childrenArray = React.Children.toArray(children);
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step];
     const [completed, setCompleted] = useState(false);
+    const [prioritized, setPrioritized] = useState(false);
+    const [selectedIds, setSelectedIds] = useState([]);
+    const history = useHistory();
 
     function isLastStep() {
         return step === childrenArray.length - 1;
@@ -26,8 +36,10 @@ const FormikStepper = ({ children, ...props }) => {
             validationSchema={ProfileSchema}
             onSubmit={async (values, helpers) => {
                 if (isLastStep()) {
-                    await props.onSubmit(values, helpers);
+                    values.suggestions = selectedIds;
+                    props.addUser(values);
                     setCompleted(true);
+                    history.push('/profile');
                 } else {
                     setStep((s) => s + 1);
                     helpers.setTouched({});
@@ -46,9 +58,14 @@ const FormikStepper = ({ children, ...props }) => {
                             </Step>
                         ))}
                     </Stepper>
-
-                    {currentChild}
-
+                    <FormContext.Provider
+                        value={{
+                            setPrioritized: setPrioritized,
+                            setSelectedIds: setSelectedIds,
+                        }}
+                    >
+                        {currentChild}
+                    </FormContext.Provider>
                     <Grid container spacing={2}>
                         {step > 0 ? (
                             <Grid item>
@@ -56,7 +73,10 @@ const FormikStepper = ({ children, ...props }) => {
                                     disabled={isSubmitting}
                                     variant="contained"
                                     color="primary"
-                                    onClick={() => isValid ? setStep((s) => s - 1) : null }
+                                    onClick={() => {
+                                        isValid && setStep((s) => s - 1);
+                                        setPrioritized(false);
+                                    }}
                                 >
                                     Back
                                 </Button>
@@ -69,7 +89,10 @@ const FormikStepper = ({ children, ...props }) => {
                                         <CircularProgress size="1rem" />
                                     ) : null
                                 }
-                                disabled={isSubmitting || isLastStep()}
+                                disabled={
+                                    isSubmitting ||
+                                    (isLastStep() && !prioritized)
+                                }
                                 variant="contained"
                                 color="primary"
                                 type="submit"
@@ -88,4 +111,18 @@ const FormikStepper = ({ children, ...props }) => {
     );
 };
 
-export default FormikStepper;
+const mapStateToProps = (state) => {
+    return {
+        users: state.users,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addUser: (id) => {
+            dispatch({ type: "ADD_USER", id: id });
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormikStepper);

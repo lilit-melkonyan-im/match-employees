@@ -1,7 +1,7 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
 
-export default function DataTable({ rows, name, setSelection }) {
+export default function DataTable({ rows, name, setRowsSelecton }) {
     const columns = Object.keys(rows[0]).map((field) => ({
         field: field,
         headerName: field
@@ -24,10 +24,7 @@ export default function DataTable({ rows, name, setSelection }) {
                 name={name}
                 onSelectionModelChange={({ selectionModel }) => {
                     const newSelectionModel = selectionModel;
-                    if (newSelectionModel.length > 5) {
-                    } else {
-                        setSelection(selectionModel);
-                    }
+                    setRowsSelecton(selectionModel);
                 }}
             />
         </div>

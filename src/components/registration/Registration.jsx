@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@material-ui/core";
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import FormikStepper from "./components/FormikStepper";
 import PersonalData from "./components/PersonalData";
 import ProfessionalDetails from "./components/ProfessionalDetails";
@@ -18,21 +18,13 @@ const initialValues = {
       ]
 };
 
-const RegistrationContext = React.createContext("formik");
-
-export const useRegistrationContext = () => useContext(RegistrationContext);
-
 const FormikStep = ({ children }) => <>{children}</>;
 
-export default function Registration() {
+const Registration = (props) => {
     const [selectedDate, handleDateChange] = useState(null);
-    const [suggestions, setSuggestions] = useState([]);
     return (
         <Card>
             <CardContent>
-                <RegistrationContext.Provider
-                    value={{ setSuggestions: setSuggestions }}
-                >
                     <FormikStepper initialValues={initialValues}>
                         <FormikStep label="Personal Data">
                             <PersonalData
@@ -47,8 +39,9 @@ export default function Registration() {
                             <Suggestions />
                         </FormikStep>
                     </FormikStepper>
-                </RegistrationContext.Provider>
             </CardContent>
         </Card>
     );
 }
+
+export default Registration;

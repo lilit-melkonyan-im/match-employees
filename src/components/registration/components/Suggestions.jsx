@@ -3,34 +3,40 @@ import { Button, Box, Grid, Typography } from "@material-ui/core";
 
 import suggestions from "../resources/suggestions";
 import DataTable from "./DataTable";
-import { useRegistrationContext } from "../Registration";
 import { useModal } from "../../../hooks/common";
 import Modal from "./Modal";
-import DraggableSelectionsList from './DraggableSelectionsList';
+import DraggableSelectionsList from "./DraggableSelectionsList";
+
+import {useFormContext} from './FormikStepper';
 
 const adaptSuggestions = () => {
-    suggestions.map( sug => sug.id = '' + sug.id)
-}
+    suggestions.map((sug) => (sug.id = "" + sug.id));
+};
 
-const filterSuggestions = (selection) => {
-    const filtered = suggestions.filter((sug) => selection.includes("" + sug.id));
+const filterSuggestions = (rowsSelecton) => {
+    const filtered = suggestions.filter((sug) =>
+        rowsSelecton.includes("" + sug.id)
+    );
     return filtered;
-}
+};
 
 const Suggestions = () => {
-    const [selection, setSelection] = useState([]);
-    const { setSuggestions } = useRegistrationContext();
+    const [rowsSelecton, setRowsSelecton] = useState([]);
+    const [isOpen, openModal, closeModal] = useModal(false);
+    const { setPrioritized, setSelectedIds } = useFormContext();
 
-    const handleRowsSelected = (selection) => {
-        setSelection(selection);
-        setSuggestions(selection);
+    const handleRowsSelected = (rowsSelecton) => {
+        setRowsSelecton(rowsSelecton);
     };
 
-    const submit = () => {
+    const handleSubmit = () => {
+        setPrioritized(true);
         closeModal();
     };
 
-    const [isOpen, openModal, closeModal] = useModal(false);
+    const handleClose = () => {
+        closeModal();
+    };
 
     adaptSuggestions();
 
@@ -40,7 +46,7 @@ const Suggestions = () => {
                 <DataTable
                     rows={suggestions}
                     name="suggestions"
-                    setSelection={handleRowsSelected}
+                    setRowsSelecton={handleRowsSelected}
                 />
             </Box>
             <Grid container spacing={2}>
@@ -53,7 +59,7 @@ const Suggestions = () => {
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={selection.length !== 5 ? true : false}
+                        disabled={rowsSelecton.length !== 5 ? true : false}
                         onClick={() => openModal()}
                     >
                         Prioritize
@@ -62,13 +68,16 @@ const Suggestions = () => {
             </Grid>
             <Modal
                 open={isOpen}
-                handleSubmit={submit}
-                handleClose={closeModal}
+                handleSubmit={handleSubmit}
+                handleClose={handleClose}
                 title="Prioritize Your Selection"
                 leftBtnText="Cancel"
                 rightBtnText="Done"
             >
-                <DraggableSelectionsList selection={filterSuggestions(selection)} />
+                <DraggableSelectionsList
+                    selection={filterSuggestions(rowsSelecton)}
+                    setSelectedIds={setSelectedIds}
+                />
             </Modal>
         </>
     );

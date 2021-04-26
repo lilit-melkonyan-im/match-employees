@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const DraggableSelectionsList = ({selection}) => {
+const DraggableSelectionsList = ({selection, setSelectedIds}) => {
 
     const [listItems, setListItems] = useState(selection);
 
@@ -24,8 +24,8 @@ const DraggableSelectionsList = ({selection}) => {
             result.source.index,
             result.destination.index
         );
-
         setListItems(items);
+        setSelectedIds(items.map(item => item.id))
     };
 
     const getItemStyle = (isDragging, draggableStyle) => ({
@@ -39,7 +39,7 @@ const DraggableSelectionsList = ({selection}) => {
     const getListStyle = () => ({
         background: "rgba(224, 224, 224, 1)",
         padding: 1,
-        width: 600,
+        width: 570,
     });
 
     return (
